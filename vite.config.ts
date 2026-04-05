@@ -5,7 +5,8 @@ import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
-  const base = env.VITE_BASE_URL || '/';
+  const repoName = process.env.GITHUB_REPOSITORY?.split('/')?.[1];
+  const base = env.VITE_BASE_URL || (process.env.CI && repoName ? `/${repoName}/` : '/');
 
   return {
     base,
