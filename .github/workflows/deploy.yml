@@ -1,0 +1,43 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          publish_repo: ${{ github.repository }}
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+          allow_empty_commit: true
+          token: ${{ secrets.GITHUB_TOKEN }}
