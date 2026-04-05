@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Sentinel AI: Enterprise Security Analysis",
+  "description": "Advanced security analysis engine that uses multimodal AI to distinguish between benign motion and genuine threats in surveillance footage.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

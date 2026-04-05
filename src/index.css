@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-slate-950: #020617;
+  --color-indigo-500: #6366f1;
+  --color-rose-500: #f43f5e;
+}
+
+@layer base {
+  body {
+    @apply bg-[#0a0a0c] text-slate-200 antialiased;
+  }
+}
+
+@layer components {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+  }
+
+  .glass-panel {
+    @apply bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl;
+  }
+
+  .scan-line {
+    @apply absolute inset-0 pointer-events-none overflow-hidden;
+  }
+
+  .scan-line::after {
+    content: "";
+    @apply absolute inset-0 w-full h-[2px] bg-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.8)];
+    animation: scan 3s linear infinite;
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(1000%); }
+  }
+
+  .pulse-ring {
+    @apply absolute inset-0 rounded-full border-2 border-indigo-500/30;
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 0; }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px currentColor;
+  }
+}
